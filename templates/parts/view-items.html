@@ -1,0 +1,20 @@
+<div id="view_items_pane" class="container">
+  <div class="row">
+    <div style="display: inline;">Product Categories:</div>
+    <div style="display: inline; padding: 5px 5px 5px 5px;">
+      <ul id="category_list">
+      {% for category in categories %}
+        <a href="#" class="btn btn-primary"><li>{{ category.name }}</li></a>
+      {% endfor %} 
+      </ul>
+    </div>
+    <hr >
+    <!-- Products -->
+    <div style="display: inline;"><h4>Products:</h4>
+      <div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

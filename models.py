@@ -101,7 +101,7 @@ class ProductCategory(db.Model, DefaultTableInterface):
 '''
 A product in the store
 '''
-class Product(db.Model):  
+class Product(db.Model, DefaultTableInterface):  
   __tablename__ = 'Products'
 
   id = Column(db.Integer, primary_key=True)
@@ -110,14 +110,16 @@ class Product(db.Model):
   brand = Column(db.Integer, db.ForeignKey('Brands.id'), nullable=False)
   description = Column(String)
   product_category = Column(db.Integer, db.ForeignKey('ProductCategories.id'))
+  img_url = Column(String)
   
 
-  def __init__(self, name, price, brand, description, product_category):
+  def __init__(self, name, price, brand, description, product_category, img_url=None):
     self.name = name
     self.price = price
     self.brand = brand
     self.description = description
     self.product_category = product_category
+    self.img_url = img_url
 
 
   def format(self):
@@ -127,8 +129,9 @@ class Product(db.Model):
       'description': self.description,
       'price': self.price,
       'price_usd': f"${self.price:.2f}",
-      'product_category': ProductCategory.get_one_or_none(self.product_category).format(),
-      'brand': Brand.get_one_or_none(self.brand).format()}
+      'product_category': ProductCategory.get_one_or_none(self.product_category).format() if self.product_category is not None else None,
+      'brand': Brand.get_one_or_none(self.brand).format(),
+      'img_url': self.img_url if self.img_url is not None else "https://via.placeholder.com/150"}
   
 '''
 A review of a product
@@ -140,10 +143,13 @@ class ProductReview(db.Model, DefaultTableInterface):
   review = Column(String)
   rating = Column(db.Float)
   product = Column(db.Integer, db.ForeignKey('Products.id'), nullable=False)
+  customer_id = Column(db.Integer, db.ForeignKey('Customers.id'), nullable=False)
 
-  def __init__(self, review, rating):
+  def __init__(self, review, rating, product_id, customer_id):
     self.review = review
     self.rating = rating
+    self.product = product_id
+    self.customer_id = customer_id
 
   def format(self):
     return {

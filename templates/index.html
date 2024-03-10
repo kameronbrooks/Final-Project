@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="Flask App">
+    <title>Flask App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h2 style="margin: 5px 5px 5px 5px;"><i class="fas fa-store"></i> Storefront</h2>
+        {% include 'parts/nav.html' %}
+    </header>
+    
+    {% include 'parts/main-content.html' %}
+    {% include 'parts/footer.html' %}
+</body>
+</html>
